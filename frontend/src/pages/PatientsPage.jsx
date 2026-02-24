@@ -42,7 +42,7 @@ function PatientsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold text-gray-900">Patients ({count})</h2>
-        <button onClick={() => setShowForm(true)} className="btn-primary">
+        <button onClick={() => navigate('/patients/register')} className="btn-primary">
           + Register Patient
         </button>
       </div>
