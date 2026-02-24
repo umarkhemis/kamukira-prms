@@ -54,5 +54,11 @@ Thumbs.db
 .coverage
 htmlcov/
 coverage.xml
+<<<<<<< Updated upstream
 *.pyc
 __pycache__/
+=======
+__pycache__/
+*.pyc
+*.pyo
+>>>>>>> Stashed changes
