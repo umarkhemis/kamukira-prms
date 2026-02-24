@@ -2,8 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.utils import timezone
-from django.db.models import Count, Q
-from datetime import timedelta, date
+from django.db.models import Count
 from apps.patients.models import Patient
 from apps.visits.models import Visit, Diagnosis
 from apps.prescriptions.models import Prescription

@@ -9,6 +9,7 @@ from .serializers import LabTestSerializer, LabRequestSerializer
 class LabTestViewSet(viewsets.ModelViewSet):
     queryset = LabTest.objects.all()
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = LabTestSerializer
     search_fields = ['name', 'category']
     filterset_fields = ['category']
 

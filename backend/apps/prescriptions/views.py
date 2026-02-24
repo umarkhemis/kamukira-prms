@@ -9,6 +9,7 @@ from .serializers import MedicationSerializer, PrescriptionSerializer
 class MedicationViewSet(viewsets.ModelViewSet):
     queryset = Medication.objects.all()
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = MedicationSerializer
     search_fields = ['name', 'generic_name']
     filterset_fields = ['is_available', 'dosage_form']
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { patientService } from '../services/patientService';
 import LoadingSpinner from '../components/common/LoadingSpinner';
@@ -13,7 +13,7 @@ function PatientsPage() {
   const [count, setCount] = useState(0);
   const navigate = useNavigate();
 
-  const loadPatients = (searchTerm = '') => {
+  const loadPatients = useCallback((searchTerm = '') => {
     setLoading(true);
     patientService.getAll({ search: searchTerm, page_size: 20 })
       .then((res) => {
@@ -22,11 +22,11 @@ function PatientsPage() {
       })
       .catch(console.error)
       .finally(() => setLoading(false));
-  };
+  }, []);
 
   useEffect(() => {
     loadPatients();
-  }, []);
+  }, [loadPatients]);
 
   const handleSearch = (e) => {
     e.preventDefault();

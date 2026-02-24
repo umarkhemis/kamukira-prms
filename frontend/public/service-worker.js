@@ -3,13 +3,13 @@ const CACHE_NAME = 'kamukira-prms-v1';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
-  '/static/js/main.chunk.js',
-  '/static/js/bundle.js',
   '/manifest.json',
 ];
 
 const API_CACHE_NAME = 'kamukira-api-v1';
-const OFFLINE_QUEUE_KEY = 'offline-queue';
+const OFFLINE_QUEUE_DB = 'kamukira-offline-queue';
+const OFFLINE_QUEUE_STORE = 'queue';
+const OFFLINE_QUEUE_DB_VERSION = 1;
 
 // Install event - cache static assets
 self.addEventListener('install', (event) => {
@@ -35,6 +35,45 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
+// Open IndexedDB for the offline queue
+function openQueueDB() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(OFFLINE_QUEUE_DB, OFFLINE_QUEUE_DB_VERSION);
+    req.onupgradeneeded = (e) => {
+      e.target.result.createObjectStore(OFFLINE_QUEUE_STORE, { keyPath: 'id', autoIncrement: true });
+    };
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+function enqueueRequest(item) {
+  return openQueueDB().then((db) => new Promise((resolve, reject) => {
+    const tx = db.transaction(OFFLINE_QUEUE_STORE, 'readwrite');
+    tx.objectStore(OFFLINE_QUEUE_STORE).add(item);
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  }));
+}
+
+function dequeueAllRequests() {
+  return openQueueDB().then((db) => new Promise((resolve, reject) => {
+    const tx = db.transaction(OFFLINE_QUEUE_STORE, 'readonly');
+    const req = tx.objectStore(OFFLINE_QUEUE_STORE).getAll();
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  }));
+}
+
+function clearQueue() {
+  return openQueueDB().then((db) => new Promise((resolve, reject) => {
+    const tx = db.transaction(OFFLINE_QUEUE_STORE, 'readwrite');
+    tx.objectStore(OFFLINE_QUEUE_STORE).clear();
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  }));
+}
+
 // Fetch event - serve from cache or network
 self.addEventListener('fetch', (event) => {
   const { request } = event;
@@ -52,28 +91,25 @@ self.addEventListener('fetch', (event) => {
             });
             return response;
           })
-          .catch(() => {
-            return caches.match(request);
-          })
+          .catch(() => caches.match(request))
       );
     } else if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(request.method)) {
       event.respondWith(
-        fetch(request).catch(() => {
-          return request.clone().json().then((body) => {
-            const queue = JSON.parse(localStorage.getItem(OFFLINE_QUEUE_KEY) || '[]');
-            queue.push({
+        fetch(request).catch(() =>
+          request.clone().json().then((body) =>
+            enqueueRequest({
               url: request.url,
               method: request.method,
-              body: body,
+              body,
               timestamp: Date.now(),
-            });
-            localStorage.setItem(OFFLINE_QUEUE_KEY, JSON.stringify(queue));
-            return new Response(
-              JSON.stringify({ status: 'queued', message: 'Request queued for offline sync' }),
-              { headers: { 'Content-Type': 'application/json' }, status: 202 }
-            );
-          });
-        })
+            }).then(() =>
+              new Response(
+                JSON.stringify({ status: 'queued', message: 'Request queued for offline sync' }),
+                { headers: { 'Content-Type': 'application/json' }, status: 202 }
+              )
+            )
+          )
+        )
       );
     }
     return;
@@ -95,8 +131,10 @@ self.addEventListener('sync', (event) => {
 });
 
 async function syncOfflineQueue() {
-  const queue = JSON.parse(localStorage.getItem(OFFLINE_QUEUE_KEY) || '[]');
-  const remaining = [];
+  const queue = await dequeueAllRequests();
+  if (queue.length === 0) return;
+
+  let anyFailed = false;
   for (const item of queue) {
     try {
       await fetch(item.url, {
@@ -105,8 +143,12 @@ async function syncOfflineQueue() {
         body: JSON.stringify(item.body),
       });
     } catch {
-      remaining.push(item);
+      anyFailed = true;
     }
   }
-  localStorage.setItem(OFFLINE_QUEUE_KEY, JSON.stringify(remaining));
+
+  if (!anyFailed) {
+    await clearQueue();
+  }
 }
+

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { reportService } from '../services/reportService';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 
@@ -9,7 +9,7 @@ function ReportsPage() {
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
 
-  const load = () => {
+  const load = useCallback(() => {
     setLoading(true);
     const params = {};
     if (dateFrom) params.date_from = dateFrom;
@@ -29,9 +29,9 @@ function ReportsPage() {
       })
       .catch(console.error)
       .finally(() => setLoading(false));
-  };
+  }, [dateFrom, dateTo]);
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { load(); }, [load]);
 
   return (
     <div className="space-y-6">
