@@ -25,6 +25,7 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
     'drf_spectacular',
     'django_filters',
@@ -99,6 +100,8 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'staff.StaffUser'
+
+FIXTURE_DIRS = [BASE_DIR / 'fixtures']
 
 # REST Framework
 REST_FRAMEWORK = {
