@@ -1,0 +1,535 @@
+[
+  {
+    "model": "staff.staffuser",
+    "pk": 1,
+    "fields": {
+      "username": "admin",
+      "password": "pbkdf2_sha256$600000$admin$hashed",
+      "email": "admin@kamukira.ug",
+      "first_name": "System",
+      "last_name": "Administrator",
+      "is_staff": true,
+      "is_superuser": true,
+      "is_active": true,
+      "role": "admin",
+      "employee_id": "EMP-ADMIN-001",
+      "department": "Administration",
+      "phone_number": "+256700000001"
+    }
+  },
+  {
+    "model": "staff.staffuser",
+    "pk": 2,
+    "fields": {
+      "username": "dr_mukasa",
+      "password": "pbkdf2_sha256$600000$test$hashed",
+      "email": "dr.mukasa@kamukira.ug",
+      "first_name": "David",
+      "last_name": "Mukasa",
+      "is_staff": false,
+      "is_superuser": false,
+      "is_active": true,
+      "role": "doctor",
+      "employee_id": "EMP-DOC-001",
+      "department": "Outpatient",
+      "phone_number": "+256700000002"
+    }
+  },
+  {
+    "model": "staff.staffuser",
+    "pk": 3,
+    "fields": {
+      "username": "nurse_apio",
+      "password": "pbkdf2_sha256$600000$test$hashed",
+      "email": "nurse.apio@kamukira.ug",
+      "first_name": "Grace",
+      "last_name": "Apio",
+      "is_staff": false,
+      "is_superuser": false,
+      "is_active": true,
+      "role": "nurse",
+      "employee_id": "EMP-NRS-001",
+      "department": "Nursing",
+      "phone_number": "+256700000003"
+    }
+  },
+  {
+    "model": "staff.staffuser",
+    "pk": 4,
+    "fields": {
+      "username": "receptionist_mary",
+      "password": "pbkdf2_sha256$600000$test$hashed",
+      "email": "mary@kamukira.ug",
+      "first_name": "Mary",
+      "last_name": "Atim",
+      "is_staff": false,
+      "is_superuser": false,
+      "is_active": true,
+      "role": "receptionist",
+      "employee_id": "EMP-REC-001",
+      "department": "Reception",
+      "phone_number": "+256700000004"
+    }
+  },
+  {
+    "model": "staff.staffuser",
+    "pk": 5,
+    "fields": {
+      "username": "labtech_peter",
+      "password": "pbkdf2_sha256$600000$test$hashed",
+      "email": "peter@kamukira.ug",
+      "first_name": "Peter",
+      "last_name": "Ochola",
+      "is_staff": false,
+      "is_superuser": false,
+      "is_active": true,
+      "role": "lab_technician",
+      "employee_id": "EMP-LAB-001",
+      "department": "Laboratory",
+      "phone_number": "+256700000005"
+    }
+  },
+  {
+    "model": "staff.staffuser",
+    "pk": 6,
+    "fields": {
+      "username": "pharmacist_sarah",
+      "password": "pbkdf2_sha256$600000$test$hashed",
+      "email": "sarah@kamukira.ug",
+      "first_name": "Sarah",
+      "last_name": "Namukasa",
+      "is_staff": false,
+      "is_superuser": false,
+      "is_active": true,
+      "role": "pharmacist",
+      "employee_id": "EMP-PHA-001",
+      "department": "Pharmacy",
+      "phone_number": "+256700000006"
+    }
+  },
+  {
+    "model": "prescriptions.medication",
+    "pk": 1,
+    "fields": {
+      "name": "Artemether-Lumefantrine",
+      "generic_name": "Artemether-Lumefantrine",
+      "dosage_form": "tablet",
+      "strength": "20/120mg",
+      "stock_quantity": 500,
+      "unit": "tablets",
+      "is_available": true
+    }
+  },
+  {
+    "model": "prescriptions.medication",
+    "pk": 2,
+    "fields": {
+      "name": "Paracetamol",
+      "generic_name": "Acetaminophen",
+      "dosage_form": "tablet",
+      "strength": "500mg",
+      "stock_quantity": 1000,
+      "unit": "tablets",
+      "is_available": true
+    }
+  },
+  {
+    "model": "prescriptions.medication",
+    "pk": 3,
+    "fields": {
+      "name": "Amoxicillin",
+      "generic_name": "Amoxicillin",
+      "dosage_form": "capsule",
+      "strength": "500mg",
+      "stock_quantity": 300,
+      "unit": "capsules",
+      "is_available": true
+    }
+  },
+  {
+    "model": "prescriptions.medication",
+    "pk": 4,
+    "fields": {
+      "name": "Cotrimoxazole",
+      "generic_name": "Sulfamethoxazole/Trimethoprim",
+      "dosage_form": "tablet",
+      "strength": "480mg",
+      "stock_quantity": 400,
+      "unit": "tablets",
+      "is_available": true
+    }
+  },
+  {
+    "model": "prescriptions.medication",
+    "pk": 5,
+    "fields": {
+      "name": "Metronidazole",
+      "generic_name": "Metronidazole",
+      "dosage_form": "tablet",
+      "strength": "400mg",
+      "stock_quantity": 200,
+      "unit": "tablets",
+      "is_available": true
+    }
+  },
+  {
+    "model": "prescriptions.medication",
+    "pk": 6,
+    "fields": {
+      "name": "Ibuprofen",
+      "generic_name": "Ibuprofen",
+      "dosage_form": "tablet",
+      "strength": "400mg",
+      "stock_quantity": 350,
+      "unit": "tablets",
+      "is_available": true
+    }
+  },
+  {
+    "model": "prescriptions.medication",
+    "pk": 7,
+    "fields": {
+      "name": "ORS (Oral Rehydration Salts)",
+      "generic_name": "Oral Rehydration Salts",
+      "dosage_form": "sachet",
+      "strength": "20.5g",
+      "stock_quantity": 200,
+      "unit": "sachets",
+      "is_available": true
+    }
+  },
+  {
+    "model": "prescriptions.medication",
+    "pk": 8,
+    "fields": {
+      "name": "Zinc Sulphate",
+      "generic_name": "Zinc Sulphate",
+      "dosage_form": "tablet",
+      "strength": "20mg",
+      "stock_quantity": 150,
+      "unit": "tablets",
+      "is_available": true
+    }
+  },
+  {
+    "model": "prescriptions.medication",
+    "pk": 9,
+    "fields": {
+      "name": "Ferrous Sulphate + Folic Acid",
+      "generic_name": "Ferrous Sulphate/Folic Acid",
+      "dosage_form": "tablet",
+      "strength": "200mg/0.4mg",
+      "stock_quantity": 300,
+      "unit": "tablets",
+      "is_available": true
+    }
+  },
+  {
+    "model": "prescriptions.medication",
+    "pk": 10,
+    "fields": {
+      "name": "Doxycycline",
+      "generic_name": "Doxycycline",
+      "dosage_form": "capsule",
+      "strength": "100mg",
+      "stock_quantity": 100,
+      "unit": "capsules",
+      "is_available": true
+    }
+  },
+  {
+    "model": "prescriptions.medication",
+    "pk": 11,
+    "fields": {
+      "name": "Quinine",
+      "generic_name": "Quinine Sulphate",
+      "dosage_form": "tablet",
+      "strength": "300mg",
+      "stock_quantity": 80,
+      "unit": "tablets",
+      "is_available": true
+    }
+  },
+  {
+    "model": "prescriptions.medication",
+    "pk": 12,
+    "fields": {
+      "name": "Gentamicin",
+      "generic_name": "Gentamicin",
+      "dosage_form": "injection",
+      "strength": "80mg/2ml",
+      "stock_quantity": 50,
+      "unit": "vials",
+      "is_available": true
+    }
+  },
+  {
+    "model": "prescriptions.medication",
+    "pk": 13,
+    "fields": {
+      "name": "Hydrocortisone",
+      "generic_name": "Hydrocortisone",
+      "dosage_form": "injection",
+      "strength": "100mg",
+      "stock_quantity": 30,
+      "unit": "vials",
+      "is_available": true
+    }
+  },
+  {
+    "model": "prescriptions.medication",
+    "pk": 14,
+    "fields": {
+      "name": "Vitamin A",
+      "generic_name": "Retinol",
+      "dosage_form": "capsule",
+      "strength": "200,000 IU",
+      "stock_quantity": 200,
+      "unit": "capsules",
+      "is_available": true
+    }
+  },
+  {
+    "model": "prescriptions.medication",
+    "pk": 15,
+    "fields": {
+      "name": "Mebendazole",
+      "generic_name": "Mebendazole",
+      "dosage_form": "tablet",
+      "strength": "500mg",
+      "stock_quantity": 250,
+      "unit": "tablets",
+      "is_available": true
+    }
+  },
+  {
+    "model": "prescriptions.medication",
+    "pk": 16,
+    "fields": {
+      "name": "Ciprofloxacin",
+      "generic_name": "Ciprofloxacin",
+      "dosage_form": "tablet",
+      "strength": "500mg",
+      "stock_quantity": 100,
+      "unit": "tablets",
+      "is_available": true
+    }
+  },
+  {
+    "model": "prescriptions.medication",
+    "pk": 17,
+    "fields": {
+      "name": "Diazepam",
+      "generic_name": "Diazepam",
+      "dosage_form": "injection",
+      "strength": "10mg/2ml",
+      "stock_quantity": 20,
+      "unit": "ampoules",
+      "is_available": true
+    }
+  },
+  {
+    "model": "prescriptions.medication",
+    "pk": 18,
+    "fields": {
+      "name": "Oxytocin",
+      "generic_name": "Oxytocin",
+      "dosage_form": "injection",
+      "strength": "10IU/ml",
+      "stock_quantity": 40,
+      "unit": "ampoules",
+      "is_available": true
+    }
+  },
+  {
+    "model": "prescriptions.medication",
+    "pk": 19,
+    "fields": {
+      "name": "Magnesium Sulphate",
+      "generic_name": "Magnesium Sulphate",
+      "dosage_form": "injection",
+      "strength": "50%",
+      "stock_quantity": 25,
+      "unit": "ampoules",
+      "is_available": true
+    }
+  },
+  {
+    "model": "prescriptions.medication",
+    "pk": 20,
+    "fields": {
+      "name": "Fluconazole",
+      "generic_name": "Fluconazole",
+      "dosage_form": "capsule",
+      "strength": "150mg",
+      "stock_quantity": 80,
+      "unit": "capsules",
+      "is_available": true
+    }
+  },
+  {
+    "model": "lab.labtest",
+    "pk": 1,
+    "fields": {
+      "name": "Malaria RDT",
+      "category": "Parasitology",
+      "normal_range": "Negative",
+      "unit": "",
+      "price": "0.00"
+    }
+  },
+  {
+    "model": "lab.labtest",
+    "pk": 2,
+    "fields": {
+      "name": "Malaria Blood Smear (Thick & Thin)",
+      "category": "Parasitology",
+      "normal_range": "Negative",
+      "unit": "",
+      "price": "0.00"
+    }
+  },
+  {
+    "model": "lab.labtest",
+    "pk": 3,
+    "fields": {
+      "name": "Full Blood Count (FBC)",
+      "category": "Hematology",
+      "normal_range": "WBC 4-11 x10^9/L, RBC 4.5-5.5 x10^12/L",
+      "unit": "x10^9/L",
+      "price": "0.00"
+    }
+  },
+  {
+    "model": "lab.labtest",
+    "pk": 4,
+    "fields": {
+      "name": "Haemoglobin (Hb)",
+      "category": "Hematology",
+      "normal_range": "Male: 13-17 g/dL, Female: 12-16 g/dL",
+      "unit": "g/dL",
+      "price": "0.00"
+    }
+  },
+  {
+    "model": "lab.labtest",
+    "pk": 5,
+    "fields": {
+      "name": "HIV Rapid Test",
+      "category": "Serology",
+      "normal_range": "Non-Reactive",
+      "unit": "",
+      "price": "0.00"
+    }
+  },
+  {
+    "model": "lab.labtest",
+    "pk": 6,
+    "fields": {
+      "name": "Syphilis RPR",
+      "category": "Serology",
+      "normal_range": "Non-Reactive",
+      "unit": "",
+      "price": "0.00"
+    }
+  },
+  {
+    "model": "lab.labtest",
+    "pk": 7,
+    "fields": {
+      "name": "Urine Analysis",
+      "category": "Urinalysis",
+      "normal_range": "Normal",
+      "unit": "",
+      "price": "0.00"
+    }
+  },
+  {
+    "model": "lab.labtest",
+    "pk": 8,
+    "fields": {
+      "name": "Urine Pregnancy Test",
+      "category": "Urinalysis",
+      "normal_range": "Negative",
+      "unit": "",
+      "price": "0.00"
+    }
+  },
+  {
+    "model": "lab.labtest",
+    "pk": 9,
+    "fields": {
+      "name": "Stool Microscopy",
+      "category": "Microbiology",
+      "normal_range": "No ova/cysts seen",
+      "unit": "",
+      "price": "0.00"
+    }
+  },
+  {
+    "model": "lab.labtest",
+    "pk": 10,
+    "fields": {
+      "name": "Blood Glucose (RBS)",
+      "category": "Biochemistry",
+      "normal_range": "4.0-7.8 mmol/L (fasting <6.1)",
+      "unit": "mmol/L",
+      "price": "0.00"
+    }
+  },
+  {
+    "model": "lab.labtest",
+    "pk": 11,
+    "fields": {
+      "name": "Sputum AFB (TB)",
+      "category": "Microbiology",
+      "normal_range": "Negative",
+      "unit": "",
+      "price": "0.00"
+    }
+  },
+  {
+    "model": "lab.labtest",
+    "pk": 12,
+    "fields": {
+      "name": "Widal Test",
+      "category": "Serology",
+      "normal_range": "< 1:80",
+      "unit": "titre",
+      "price": "0.00"
+    }
+  },
+  {
+    "model": "lab.labtest",
+    "pk": 13,
+    "fields": {
+      "name": "Liver Function Tests (LFTs)",
+      "category": "Biochemistry",
+      "normal_range": "ALT 7-56 U/L, AST 10-40 U/L",
+      "unit": "U/L",
+      "price": "0.00"
+    }
+  },
+  {
+    "model": "lab.labtest",
+    "pk": 14,
+    "fields": {
+      "name": "CD4 Count",
+      "category": "Immunology",
+      "normal_range": "> 500 cells/μL",
+      "unit": "cells/μL",
+      "price": "0.00"
+    }
+  },
+  {
+    "model": "lab.labtest",
+    "pk": 15,
+    "fields": {
+      "name": "Blood Culture",
+      "category": "Microbiology",
+      "normal_range": "No growth",
+      "unit": "",
+      "price": "0.00"
+    }
+  }
+]
