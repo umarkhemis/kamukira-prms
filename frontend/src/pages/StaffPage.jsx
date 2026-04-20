@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { ShieldAlert } from 'lucide-react';
 import api from '../services/api';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import Icon from '../components/common/Icon';
 
 function StaffPage() {
   const { user } = useSelector((state) => state.auth);
@@ -18,7 +20,7 @@ function StaffPage() {
   if (user?.role !== 'admin' && !user?.is_superuser) {
     return (
       <div className="card text-center py-12 text-gray-400">
-        <span className="text-5xl">🔒</span>
+        <Icon icon={ShieldAlert} size="2xl" className="mx-auto text-slate-400" />
         <p className="mt-3">Admin access required</p>
       </div>
     );
@@ -35,18 +37,18 @@ function StaffPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-100">
-                  <th className="text-left py-2 font-medium text-gray-600">Name</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Username</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Role</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Department</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Employee ID</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Status</th>
+                <tr className="border-b border-slate-100">
+                  <th className="table-head">Name</th>
+                  <th className="table-head">Username</th>
+                  <th className="table-head">Role</th>
+                  <th className="table-head">Department</th>
+                  <th className="table-head">Employee ID</th>
+                  <th className="table-head">Status</th>
                 </tr>
               </thead>
               <tbody>
                 {staff.map((s) => (
-                  <tr key={s.id} className="border-b border-gray-50 hover:bg-gray-50">
+                  <tr key={s.id} className="table-row">
                     <td className="py-2 font-medium">{s.first_name} {s.last_name}</td>
                     <td className="py-2 text-gray-600">@{s.username}</td>
                     <td className="py-2">

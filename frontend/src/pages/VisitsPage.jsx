@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
+import { ClipboardPlus, Stethoscope, X } from 'lucide-react';
 import { visitService } from '../services/visitService';
-import { patientService } from '../services/patientService';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import VisitForm from '../components/visits/VisitForm';
+import Icon from '../components/common/Icon';
 import { formatDateTime, getStatusBadgeClass } from '../utils/helpers';
 
 function VisitsPage() {
@@ -11,7 +12,7 @@ function VisitsPage() {
   const [showForm, setShowForm] = useState(false);
   const [statusFilter, setStatusFilter] = useState('');
 
-  const loadVisits = () => {
+  const loadVisits = useCallback(() => {
     setLoading(true);
     const params = {};
     if (statusFilter) params.status = statusFilter;
@@ -19,22 +20,27 @@ function VisitsPage() {
       .then((res) => setVisits(res.data.results || res.data))
       .catch(console.error)
       .finally(() => setLoading(false));
-  };
+  }, [statusFilter]);
 
-  useEffect(() => { loadVisits(); }, [statusFilter]);
+  useEffect(() => { loadVisits(); }, [loadVisits]);
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold text-gray-900">Visits</h2>
-        <button onClick={() => setShowForm(true)} className="btn-primary">+ New Visit</button>
+        <button onClick={() => setShowForm(true)} className="btn-primary">
+          <Icon icon={ClipboardPlus} size="sm" />
+          New Visit
+        </button>
       </div>
 
       {showForm && (
         <div className="card">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold">Create New Visit</h3>
-            <button onClick={() => setShowForm(false)} className="text-gray-400">✕</button>
+            <button onClick={() => setShowForm(false)} className="text-slate-500 hover:text-slate-700" aria-label="Close visit form">
+              <Icon icon={X} size="sm" />
+            </button>
           </div>
           <VisitForm onSuccess={() => { setShowForm(false); loadVisits(); }} onCancel={() => setShowForm(false)} />
         </div>
@@ -61,18 +67,18 @@ function VisitsPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-100">
-                  <th className="text-left py-2 font-medium text-gray-600">Visit No.</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Patient</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Type</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Complaint</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Date</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Status</th>
+                <tr className="border-b border-slate-100">
+                  <th className="table-head">Visit No.</th>
+                  <th className="table-head">Patient</th>
+                  <th className="table-head">Type</th>
+                  <th className="table-head">Complaint</th>
+                  <th className="table-head">Date</th>
+                  <th className="table-head">Status</th>
                 </tr>
               </thead>
               <tbody>
                 {visits.map((v) => (
-                  <tr key={v.id} className="border-b border-gray-50 hover:bg-gray-50">
+                  <tr key={v.id} className="table-row">
                     <td className="py-2 font-mono text-xs">{v.visit_number}</td>
                     <td className="py-2 font-medium">{v.patient_name}</td>
                     <td className="py-2 capitalize">{v.visit_type}</td>
@@ -89,8 +95,8 @@ function VisitsPage() {
             </table>
           </div>
         ) : (
-          <div className="text-center py-12 text-gray-400">
-            <span className="text-5xl">🏥</span>
+          <div className="text-center py-12 text-slate-500">
+            <Icon icon={Stethoscope} size="2xl" className="mx-auto text-slate-400" />
             <p className="mt-3">No visits found</p>
           </div>
         )}

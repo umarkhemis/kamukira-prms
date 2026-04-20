@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
+import { AlertTriangle, X } from 'lucide-react';
 import { labService } from '../services/labService';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import Icon from '../components/common/Icon';
 import { formatDateTime } from '../utils/helpers';
 
 function LabPage() {
@@ -9,16 +11,16 @@ function LabPage() {
   const [filter, setFilter] = useState('');
   const [resultForm, setResultForm] = useState(null);
 
-  const load = () => {
+  const load = useCallback(() => {
     setLoading(true);
     const params = filter ? { status: filter } : {};
     labService.getRequests(params)
       .then((res) => setRequests(res.data.results || res.data))
       .catch(console.error)
       .finally(() => setLoading(false));
-  };
+  }, [filter]);
 
-  useEffect(() => { load(); }, [filter]);
+  useEffect(() => { load(); }, [load]);
 
   const handleSubmitResult = async (e) => {
     e.preventDefault();
@@ -43,7 +45,9 @@ function LabPage() {
         <div className="card">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold">Enter Result: {resultForm.test_name}</h3>
-            <button onClick={() => setResultForm(null)} className="text-gray-400">✕</button>
+            <button onClick={() => setResultForm(null)} className="text-slate-500 hover:text-slate-700" aria-label="Close result form">
+              <Icon icon={X} size="sm" />
+            </button>
           </div>
           <form onSubmit={handleSubmitResult} className="space-y-3">
             <div className="grid grid-cols-2 gap-4">
@@ -99,19 +103,19 @@ function LabPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-100">
-                  <th className="text-left py-2 font-medium text-gray-600">Test</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Patient</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Urgency</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Result</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Date</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Status</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Action</th>
+                <tr className="border-b border-slate-100">
+                  <th className="table-head">Test</th>
+                  <th className="table-head">Patient</th>
+                  <th className="table-head">Urgency</th>
+                  <th className="table-head">Result</th>
+                  <th className="table-head">Date</th>
+                  <th className="table-head">Status</th>
+                  <th className="table-head">Action</th>
                 </tr>
               </thead>
               <tbody>
                 {requests.map((r) => (
-                  <tr key={r.id} className="border-b border-gray-50 hover:bg-gray-50">
+                  <tr key={r.id} className="table-row">
                     <td className="py-2 font-medium">{r.test_name}</td>
                     <td className="py-2">{r.patient_name}</td>
                     <td className="py-2">
@@ -121,8 +125,9 @@ function LabPage() {
                     </td>
                     <td className="py-2">
                       {r.result_value ? (
-                        <span className={r.is_abnormal ? 'text-red-600 font-medium' : ''}>
-                          {r.result_value} {r.is_abnormal && '⚠️'}
+                        <span className={`inline-flex items-center gap-1 ${r.is_abnormal ? 'text-red-600 font-medium' : ''}`}>
+                          {r.result_value}
+                          {r.is_abnormal && <Icon icon={AlertTriangle} size="xs" />}
                         </span>
                       ) : '-'}
                     </td>

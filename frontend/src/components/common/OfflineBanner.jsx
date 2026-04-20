@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { WifiOff } from 'lucide-react';
 import { setOnlineStatus } from '../../store/slices/uiSlice';
 import { syncOfflineData } from '../../utils/syncManager';
 import api from '../../services/api';
+import Icon from './Icon';
 
 function OfflineBanner() {
   const dispatch = useDispatch();
@@ -37,8 +39,11 @@ function OfflineBanner() {
   if (isOnline) return null;
 
   return (
-    <div className="bg-red-500 text-white text-center text-sm py-2 px-4">
-      ⚠️ You are offline — changes will sync when connection is restored
+    <div className="bg-amber-100 text-amber-900 border-b border-amber-200 text-sm py-2 px-4">
+      <div className="flex items-center justify-center gap-2">
+        <Icon icon={WifiOff} size="sm" />
+        <span>You are offline — changes will sync when connection is restored.</span>
+      </div>
     </div>
   );
 }

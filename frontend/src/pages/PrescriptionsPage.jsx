@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { prescriptionService } from '../services/prescriptionService';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import { formatDateTime } from '../utils/helpers';
@@ -8,7 +8,7 @@ function PrescriptionsPage() {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('');
 
-  const load = () => {
+  const load = useCallback(() => {
     setLoading(true);
     const params = {};
     if (filter === 'pending') params.is_dispensed = false;
@@ -17,9 +17,9 @@ function PrescriptionsPage() {
       .then((res) => setPrescriptions(res.data.results || res.data))
       .catch(console.error)
       .finally(() => setLoading(false));
-  };
+  }, [filter]);
 
-  useEffect(() => { load(); }, [filter]);
+  useEffect(() => { load(); }, [load]);
 
   const handleDispense = async (id) => {
     try {
@@ -53,19 +53,19 @@ function PrescriptionsPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-100">
-                  <th className="text-left py-2 font-medium text-gray-600">Medication</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Patient</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Dosage</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Qty</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Date</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Status</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Action</th>
+                <tr className="border-b border-slate-100">
+                  <th className="table-head">Medication</th>
+                  <th className="table-head">Patient</th>
+                  <th className="table-head">Dosage</th>
+                  <th className="table-head">Qty</th>
+                  <th className="table-head">Date</th>
+                  <th className="table-head">Status</th>
+                  <th className="table-head">Action</th>
                 </tr>
               </thead>
               <tbody>
                 {prescriptions.map((p) => (
-                  <tr key={p.id} className="border-b border-gray-50 hover:bg-gray-50">
+                  <tr key={p.id} className="table-row">
                     <td className="py-2 font-medium">{p.medication_name}</td>
                     <td className="py-2">{p.patient_name}</td>
                     <td className="py-2">{p.dosage} — {p.frequency}</td>
