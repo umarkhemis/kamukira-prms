@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { ArrowRight, UserPlus, Users, X } from 'lucide-react';
 import { patientService } from '../services/patientService';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import PatientForm from '../components/patients/PatientForm';
+import Icon from '../components/common/Icon';
 import { formatDate, calculateAge } from '../utils/helpers';
 
 function PatientsPage() {
@@ -11,7 +13,6 @@ function PatientsPage() {
   const [search, setSearch] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [count, setCount] = useState(0);
-  const navigate = useNavigate();
 
   const loadPatients = useCallback((searchTerm = '') => {
     setLoading(true);
@@ -43,7 +44,8 @@ function PatientsPage() {
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold text-gray-900">Patients ({count})</h2>
         <button onClick={() => setShowForm(true)} className="btn-primary">
-          + Register Patient
+          <Icon icon={UserPlus} size="sm" />
+          Register Patient
         </button>
       </div>
 
@@ -51,7 +53,9 @@ function PatientsPage() {
         <div className="card">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold">Register New Patient</h3>
-            <button onClick={() => setShowForm(false)} className="text-gray-400 hover:text-gray-600">✕</button>
+            <button onClick={() => setShowForm(false)} className="text-slate-500 hover:text-slate-700" aria-label="Close registration form">
+              <Icon icon={X} size="sm" />
+            </button>
           </div>
           <PatientForm onSuccess={handlePatientCreated} onCancel={() => setShowForm(false)} />
         </div>
@@ -80,20 +84,20 @@ function PatientsPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-100">
-                  <th className="text-left py-2 font-medium text-gray-600">Patient ID</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Name</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Gender</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Age</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Phone</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Village</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Registered</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Actions</th>
+                <tr className="border-b border-slate-100">
+                  <th className="table-head">Patient ID</th>
+                  <th className="table-head">Name</th>
+                  <th className="table-head">Gender</th>
+                  <th className="table-head">Age</th>
+                  <th className="table-head">Phone</th>
+                  <th className="table-head">Village</th>
+                  <th className="table-head">Registered</th>
+                  <th className="table-head">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {patients.map((p) => (
-                  <tr key={p.id} className="border-b border-gray-50 hover:bg-gray-50">
+                  <tr key={p.id} className="table-row">
                     <td className="py-2 font-mono text-xs text-primary-600">{p.patient_id}</td>
                     <td className="py-2 font-medium">{p.full_name}</td>
                     <td className="py-2">
@@ -108,9 +112,9 @@ function PatientsPage() {
                     <td className="py-2">
                       <Link
                         to={`/patients/${p.id}`}
-                        className="text-primary-600 hover:underline text-xs font-medium"
+                        className="text-primary-700 hover:underline text-xs font-medium inline-flex items-center gap-1"
                       >
-                        View →
+                        View <Icon icon={ArrowRight} size="xs" />
                       </Link>
                     </td>
                   </tr>
@@ -119,10 +123,11 @@ function PatientsPage() {
             </table>
           </div>
         ) : (
-          <div className="text-center py-12 text-gray-400">
-            <span className="text-5xl">👥</span>
+          <div className="text-center py-12 text-slate-500">
+            <Icon icon={Users} size="2xl" className="mx-auto text-slate-400" />
             <p className="mt-3">No patients found</p>
             <button onClick={() => setShowForm(true)} className="mt-3 btn-primary">
+              <Icon icon={UserPlus} size="sm" />
               Register First Patient
             </button>
           </div>

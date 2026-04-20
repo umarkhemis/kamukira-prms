@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { AlertTriangle, ArrowLeft } from 'lucide-react';
 import { patientService } from '../services/patientService';
 import LoadingSpinner from '../components/common/LoadingSpinner';
-import { formatDate, formatDateTime, calculateAge } from '../utils/helpers';
+import Icon from '../components/common/Icon';
+import { formatDate, formatDateTime } from '../utils/helpers';
 
 function PatientDetailPage() {
   const { id } = useParams();
@@ -24,7 +26,9 @@ function PatientDetailPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4">
-        <Link to="/patients" className="text-primary-600 hover:underline text-sm">← Patients</Link>
+        <Link to="/patients" className="text-primary-700 hover:underline text-sm inline-flex items-center gap-1">
+          <Icon icon={ArrowLeft} size="xs" /> Patients
+        </Link>
         <h2 className="text-2xl font-bold text-gray-900">Patient Record</h2>
       </div>
 
@@ -52,7 +56,7 @@ function PatientDetailPage() {
 
         {patient.allergies && (
           <div className="mt-3 p-3 bg-red-50 border border-red-100 rounded-lg">
-            <span className="text-red-600 font-medium text-sm">⚠ Allergies: </span>
+            <span className="text-red-600 font-medium text-sm inline-flex items-center gap-1"><Icon icon={AlertTriangle} size="xs" /> Allergies: </span>
             <span className="text-sm">{patient.allergies}</span>
           </div>
         )}

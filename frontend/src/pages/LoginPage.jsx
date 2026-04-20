@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { ClipboardList, LogIn } from 'lucide-react';
 import { login } from '../store/slices/authSlice';
+import Icon from '../components/common/Icon';
 
 function LoginPage() {
   const dispatch = useDispatch();
@@ -21,12 +23,14 @@ function LoginPage() {
     <div className="min-h-screen bg-gradient-to-br from-primary-800 to-primary-900 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <span className="text-6xl">🏥</span>
+          <div className="mx-auto w-16 h-16 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center">
+            <Icon icon={ClipboardList} size="2xl" className="text-white" />
+          </div>
           <h1 className="mt-4 text-3xl font-bold text-white">Kamukira HCIV</h1>
-          <p className="text-primary-200 mt-2">Patient Records Management System</p>
+          <p className="text-primary-100/80 mt-2">Patient Records Management System</p>
         </div>
         <div className="card">
-          <h2 className="text-xl font-semibold text-gray-800 mb-6">Sign In</h2>
+          <h2 className="text-xl font-semibold text-slate-900 mb-6">Sign In</h2>
           {error && (
             <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">
               {error}
@@ -66,7 +70,10 @@ function LoginPage() {
                   Signing in...
                 </>
               ) : (
-                'Sign In'
+                <>
+                  <Icon icon={LogIn} size="sm" />
+                  Sign In
+                </>
               )}
             </button>
           </form>

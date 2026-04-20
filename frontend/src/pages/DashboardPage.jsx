@@ -1,24 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Activity, ArrowRight, ClipboardPlus, ClipboardSignature, FlaskConical, Pill, Stethoscope, Users } from 'lucide-react';
 import { reportService } from '../services/reportService';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import Icon from '../components/common/Icon';
 import { formatDateTime } from '../utils/helpers';
 
 function StatCard({ title, value, icon, color }) {
   const colors = {
-    blue: 'bg-blue-50 text-blue-600 border-blue-100',
-    green: 'bg-green-50 text-green-600 border-green-100',
-    yellow: 'bg-yellow-50 text-yellow-600 border-yellow-100',
-    red: 'bg-red-50 text-red-600 border-red-100',
+    blue: 'bg-primary-50 text-primary-700 border-primary-100',
+    green: 'bg-green-50 text-green-700 border-green-100',
+    yellow: 'bg-amber-50 text-amber-700 border-amber-100',
+    red: 'bg-red-50 text-red-700 border-red-100',
   };
   return (
-    <div className={`card border ${colors[color] || colors.blue}`}>
+    <div className={`card border ${colors[color] || colors.blue} p-5`}>
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm font-medium opacity-80">{title}</p>
+          <p className="text-sm font-medium opacity-85">{title}</p>
           <p className="text-3xl font-bold mt-1">{value ?? '-'}</p>
         </div>
-        <span className="text-4xl">{icon}</span>
+        <div className="w-11 h-11 rounded-xl bg-white/70 border border-white flex items-center justify-center">
+          <Icon icon={icon} size="xl" />
+        </div>
       </div>
     </div>
   );
@@ -47,32 +51,34 @@ function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard title="Total Patients" value={data?.total_patients} icon="👥" color="blue" />
-        <StatCard title="Today's Visits" value={data?.today_visits} icon="🏥" color="green" />
-        <StatCard title="Pending Lab Tests" value={data?.pending_labs} icon="🔬" color="yellow" />
-        <StatCard title="Pending Prescriptions" value={data?.pending_prescriptions} icon="💊" color="red" />
+        <StatCard title="Total Patients" value={data?.total_patients} icon={Users} color="blue" />
+        <StatCard title="Today's Visits" value={data?.today_visits} icon={Stethoscope} color="green" />
+        <StatCard title="Pending Lab Tests" value={data?.pending_labs} icon={FlaskConical} color="yellow" />
+        <StatCard title="Pending Prescriptions" value={data?.pending_prescriptions} icon={Pill} color="red" />
       </div>
 
       <div className="card">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold">Recent Visits</h3>
-          <Link to="/visits" className="text-primary-600 text-sm hover:underline">View all →</Link>
+          <Link to="/visits" className="text-primary-700 text-sm hover:underline inline-flex items-center gap-1">
+            View all <Icon icon={ArrowRight} size="xs" />
+          </Link>
         </div>
         {data?.recent_visits?.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-100">
-                  <th className="text-left py-2 font-medium text-gray-600">Visit No.</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Patient</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Type</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Date</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Status</th>
+                <tr className="border-b border-slate-100">
+                  <th className="table-head">Visit No.</th>
+                  <th className="table-head">Patient</th>
+                  <th className="table-head">Type</th>
+                  <th className="table-head">Date</th>
+                  <th className="table-head">Status</th>
                 </tr>
               </thead>
               <tbody>
                 {data.recent_visits.map((visit) => (
-                  <tr key={visit.id} className="border-b border-gray-50 hover:bg-gray-50">
+                  <tr key={visit.id} className="table-row">
                     <td className="py-2 font-mono text-xs">{visit.visit_number}</td>
                     <td className="py-2">{visit.patient_name}</td>
                     <td className="py-2 capitalize">{visit.visit_type}</td>
@@ -98,16 +104,16 @@ function DashboardPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Link to="/patients/new" className="card hover:shadow-md transition-shadow text-center cursor-pointer">
-          <span className="text-4xl">➕</span>
-          <p className="mt-2 font-medium text-gray-700">Register Patient</p>
+          <Icon icon={ClipboardPlus} size="2xl" className="mx-auto text-primary-700" />
+          <p className="mt-3 font-medium text-slate-700">Register Patient</p>
         </Link>
         <Link to="/visits" className="card hover:shadow-md transition-shadow text-center cursor-pointer">
-          <span className="text-4xl">📋</span>
-          <p className="mt-2 font-medium text-gray-700">New Visit</p>
+          <Icon icon={ClipboardSignature} size="2xl" className="mx-auto text-primary-700" />
+          <p className="mt-3 font-medium text-slate-700">New Visit</p>
         </Link>
         <Link to="/reports" className="card hover:shadow-md transition-shadow text-center cursor-pointer">
-          <span className="text-4xl">📊</span>
-          <p className="mt-2 font-medium text-gray-700">View Reports</p>
+          <Icon icon={Activity} size="2xl" className="mx-auto text-primary-700" />
+          <p className="mt-3 font-medium text-slate-700">View Reports</p>
         </Link>
       </div>
     </div>
