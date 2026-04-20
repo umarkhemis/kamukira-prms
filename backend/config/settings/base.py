@@ -32,14 +32,15 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    'apps.staff',
-    'apps.patients',
-    'apps.visits',
-    'apps.prescriptions',
-    'apps.lab',
-    'apps.reports',
-    'apps.audit',
-    'apps.sync',
+    'apps.audit.apps.AuditConfig',
+    'apps.lab.apps.LabConfig',
+    'apps.management.apps.ManagementConfig',
+    'apps.patients.apps.PatientsConfig',
+    'apps.prescriptions.apps.PrescriptionsConfig',
+    'apps.reports.apps.ReportsConfig',
+    'apps.staff.apps.StaffConfig',
+    'apps.sync.apps.SyncConfig',
+    'apps.visits.apps.VisitsConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
