@@ -77,9 +77,9 @@ function LoginPage() {
               )}
             </button>
           </form>
-          <p className="mt-4 text-xs text-gray-400 text-center">
+          {/* <p className="mt-4 text-xs text-gray-400 text-center">
             Default admin: admin / Admin@1234
-          </p>
+          </p> */}
         </div>
       </div>
     </div>
